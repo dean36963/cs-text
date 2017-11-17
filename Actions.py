@@ -104,12 +104,30 @@ class Defuse(Action):
         return ""
 
 
+class Plant(Action):
+    @staticmethod
+    def aliases():
+        return [
+            "plant",
+            "bomb"
+        ]
+
+    @staticmethod
+    def options(player):
+        return []
+
+    @staticmethod
+    def option_prompt():
+        return ""
+
+
 def all_actions():
     return [
         Move,
         Wait,
         Shoot,
-        Defuse
+        Defuse,
+        Plant
     ]
 
 

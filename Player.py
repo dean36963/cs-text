@@ -17,6 +17,11 @@ class Player(Character):
             print("There are {} turns left this round.".format(
                 info.turns_left
             ))
+            for location, teammates in info.team_mates_by_location().items():
+                print("{} teammates are at {}".format(
+                    len(teammates),
+                    location.location_name().name()
+                ))
 
             action = None
             option = None

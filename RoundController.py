@@ -81,7 +81,7 @@ class RoundController:
                     if player.is_dead():
                         continue
                     info = RoundInfo(player, -1, self.players, self.time_left)
-                    action = player.get_action(info=info)
+                    action = player.get_action(info)
                     if isinstance(action, Wait):
                         pass
                     if isinstance(action, Move):

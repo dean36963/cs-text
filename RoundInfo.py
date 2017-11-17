@@ -47,3 +47,14 @@ class RoundInfo:
                 else:
                     seen_enemies_by_location[player.location] = [player]
         return seen_enemies_by_location
+
+    def team_mates_by_location(self):
+        location_to_teammates = {}
+        for team_mate in self.team_mates():
+            if team_mate.location in location_to_teammates:
+                team_here = location_to_teammates[team_mate.location]
+                team_here.append(team_mate)
+                location_to_teammates[team_mate.location] = team_here
+            else:
+                location_to_teammates[team_mate.location] = [team_mate]
+        return location_to_teammates
