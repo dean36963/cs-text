@@ -1,0 +1,26 @@
+from Sides import *
+from Locations import TerroristSpawn, CTSpawn
+
+
+class Character:
+    def __init__(self, side):
+        if not issubclass(side, Side):
+            raise Exception("Not a valid side.")
+        self.side = side
+        if side == Terrorist:
+            self.location = TerroristSpawn
+        else:
+            self.location = CTSpawn
+        # TODO Weapons
+        self.health = 100
+
+    def is_alive(self):
+        if self.health > 0:
+            return True
+        return False
+
+    def set_location(self, location):
+        self.location = location
+
+    def get_action(self, info=None):
+        raise NotImplementedError("Subclasses must create behaviour.")
