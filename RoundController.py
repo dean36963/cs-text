@@ -52,11 +52,13 @@ class RoundController:
                                 target.got_shot()
                                 if target.is_dead():
                                     print("{} side killed {} player.".format(
-                                        player.side,
-                                        target.side
+                                        player.side.str(),
+                                        target.side.str()
                                     ))
                                     players_died_this_round.append(target)
                                     if isinstance(target, Player):
                                         print("You got pwned.")
+                                elif isinstance(player, Player):
+                                    print("You hit an enemy.")
             for dead_player in players_died_this_round:
                 self.players.remove(dead_player)

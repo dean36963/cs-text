@@ -11,6 +11,9 @@ class Player(Character):
                     location.location_name().name(),
                     len(enemies)
                 ))
+            print("There are {} enemies left.".format(
+                info.num_enemy()
+            ))
 
             action = None
             option = None

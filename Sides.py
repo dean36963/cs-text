@@ -3,8 +3,12 @@ class Side:
 
 
 class Terrorist(Side):
-    pass
+    @staticmethod
+    def str():
+        return "Terrorist"
 
 
 class CounterTerrorist(Side):
-    pass
+    @staticmethod
+    def str():
+        return "Counter Terrorist"
