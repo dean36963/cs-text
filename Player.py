@@ -14,6 +14,9 @@ class Player(Character):
             print("There are {} enemies left.".format(
                 info.num_enemy()
             ))
+            print("There are {} turns left this round.".format(
+                info.turns_left
+            ))
 
             action = None
             option = None

@@ -57,6 +57,10 @@ class RoundController:
         if self.time_til_bomb == 0:
             # Bomb exploded
             return Terrorist
+        if self.time_left == 0 and \
+            self.time_til_bomb -1:
+            # Bomb not set, time up
+            return CounterTerrorist
         return None
 
     # I would set 15 rounds, but my God you'd be bored
@@ -76,7 +80,7 @@ class RoundController:
                 for player in self.players:
                     if player.is_dead():
                         continue
-                    info = RoundInfo(player, -1, self.players)
+                    info = RoundInfo(player, -1, self.players, self.time_left)
                     action = player.get_action(info=info)
                     if isinstance(action, Wait):
                         pass

@@ -13,6 +13,7 @@ class Character:
             self.location = CTSpawn
         # TODO Weapons
         self.health = 100
+        self.has_bomb = False
 
     def is_alive(self):
         if self.health > 0:
@@ -34,6 +35,9 @@ class Character:
         if headshot:
             damage += 20
         self.health -= damage
+
+    def give_bomb(self):
+        self.has_bomb = True
 
     def get_action(self, info=None):
         raise NotImplementedError("Subclasses must create behaviour.")

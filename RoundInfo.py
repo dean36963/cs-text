@@ -6,10 +6,12 @@ class RoundInfo:
     def __init__(self,
                  player,
                  turns_til_explosion,
-                 players):
+                 players,
+                 turns_left):
         self._player = player
         self.turns_til_explosion = turns_til_explosion
         self._players = players
+        self.turns_left = turns_left
 
     def team_mates(self):
         teammates = []
