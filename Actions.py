@@ -79,6 +79,7 @@ class Shoot(Action):
         options = []
         for location in player.location.next_to():
             options.append(location_from_locationname(location))
+        options.append(player.location)
         return options
 
     @staticmethod

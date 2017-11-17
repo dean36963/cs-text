@@ -19,8 +19,21 @@ class Character:
             return True
         return False
 
+    def is_dead(self):
+        return not self.is_alive()
+
+    def accuracy(self):
+        # TODO depends on weapons, whether is waiting etc
+        return 0.6
+
     def set_location(self, location):
         self.location = location
+
+    def got_shot(self, weapon=None, headshot=False):
+        damage = 50
+        if headshot:
+            damage += 20
+        self.health -= damage
 
     def get_action(self, info=None):
         raise NotImplementedError("Subclasses must create behaviour.")

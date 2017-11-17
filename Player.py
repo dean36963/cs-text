@@ -3,10 +3,15 @@ from Actions import action_from_alias
 
 
 class Player(Character):
-    def get_action(self, info=None):
+    def get_action(self, info):
         try:
             print("You are currently at {}.".format(self.location().location_name().name()))
-            # Info processing
+            for location, enemies in info.enemies_in_sight().items():
+                print("At location {} you can see {} enemies.".format(
+                    location.location_name().name(),
+                    len(enemies)
+                ))
+
             action = None
             option = None
             while not action:
