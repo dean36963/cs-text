@@ -23,6 +23,8 @@ class Player(Character):
                     len(teammates),
                     location.location_name().name()
                 ))
+            if self.health < 100:
+                print("You have {} HP".format(self.health))
 
             action = None
             option = None
