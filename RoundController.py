@@ -8,7 +8,7 @@ from RoundInfo import RoundInfo
 
 class RoundController:
 
-    def __init__(self):
+    def __init__(self, player_is_terrorist):
         self.players = []
         self.time_left = 15
         # -1 for not yet set
@@ -17,6 +17,7 @@ class RoundController:
         self.time_til_bomb = -1
         self.ct_rounds = 0
         self.t_rounds = 0
+        self.player_is_terrorist = player_is_terrorist
 
     def start(self):
         self.players = []
@@ -24,8 +25,7 @@ class RoundController:
         self.time_til_bomb = -1
         self.ct_rounds = 0
         self.t_rounds = 0
-        player_is_terrorist = randint(0, 1)
-        if player_is_terrorist:
+        if self.player_is_terrorist:
             self.players.append(Player(Terrorist))
             self.players.append(NPC(CounterTerrorist))
         else:

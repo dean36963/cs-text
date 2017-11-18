@@ -1,9 +1,11 @@
 from RoundController import RoundController
+from random import randint
 
 
 def main():
     print("Welcome to text-only Counterstrike.")
-    rc = RoundController()
+    player_is_terrorist = randint(0,1)
+    rc = RoundController(player_is_terrorist)
     rc.loop(3)
 
 if __name__ == '__main__':
