@@ -97,9 +97,16 @@ class RoundController:
                                 if player.accuracy()*100 > randint(0,100):
                                     target.got_shot()
                                     if target.is_dead():
-                                        print("{} side killed {} player.".format(
-                                            player.side.str(),
-                                            target.side.str()
+                                        player_label = "{} side".format(player.side.str())
+                                        if isinstance(player, Player):
+                                            player_label = "You"
+                                        target_label = "{} player".format(target.side.str())
+                                        if isinstance(target, Player):
+                                            target_label = "you"
+
+                                        print("{} killed {}.".format(
+                                            player_label,
+                                            target_label
                                         ))
                                         players_died_this_round.append(target)
                                         if isinstance(target, Player):
@@ -121,3 +128,7 @@ class RoundController:
                 self.t_rounds += 1
             else:
                 self.ct_rounds += 1
+        if self.ct_rounds > self.t_rounds:
+            print("Counter terrorists win the game!")
+        else:
+            print("Terrorists win the game!")
