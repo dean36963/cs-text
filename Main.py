@@ -7,6 +7,7 @@ def main():
     player_is_terrorist = randint(0,1)
     rc = RoundController(player_is_terrorist)
     rc.loop(3)
+    input("Press enter to quit.")
 
 if __name__ == '__main__':
     main()
