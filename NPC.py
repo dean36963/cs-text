@@ -47,8 +47,8 @@ class NPC(Character):
             new_location = self.route.get_next_location(self.location)
             if new_location:
                 return Move(new_location, self)
-        if self.has_bomb:
-            return Plant
+            else:
+                return Plant
         return Wait
 
     def get_ct_action(self, info):

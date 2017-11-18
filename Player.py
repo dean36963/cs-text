@@ -15,9 +15,12 @@ class Player(Character):
             print("There are {} enemies left.".format(
                 info.num_enemy()
             ))
-            print("There are {} turns left this round.".format(
-                info.turns_left
-            ))
+            if info.turns_til_explosion > 0 and info.turns_til_explosion < 99:
+                print("There are {} turns left until bomb explodes.".format(info.turns_til_explosion))
+            else:
+                print("There are {} turns left this round.".format(
+                   info.turns_left
+                ))
             for location, teammates in info.team_mates_by_location().items():
                 print("{} teammates are at {}".format(
                     len(teammates),
@@ -25,6 +28,8 @@ class Player(Character):
                 ))
             if self.health < 100:
                 print("You have {} HP".format(self.health))
+            if self.has_bomb:
+                print("You have the bomb.")
 
             action = None
             option = None
