@@ -48,7 +48,7 @@ class NPC(Character):
             if new_location:
                 return Move(new_location, self)
             else:
-                return Plant
+                return Plant(None, self)
         return Wait
 
     def get_ct_action(self, info):
@@ -59,16 +59,28 @@ class NPC(Character):
         :param info:
         :return:
         """
-        route_num = randint(1,2)
-        if route_num == 1:
-            self.route = CTSpawnToA()
-        else:
-            self.route = CTSpawnToB()
+        if not self.route:
+            route_num = randint(1,2)
+            if route_num == 1:
+                self.route = CTSpawnToA()
+            else:
+                self.route = CTSpawnToB()
         if info.enemies_in_sight():
             return Shoot(list(info.enemies_in_sight().keys())[0], self)
+        if 0 <= info.turns_til_explosion < 10:
+            # bomb armed
+            if info.can_see_bomb:
+                return Defuse(None, self)
+            else:
+                # bomb somewhere else
+                if self.location == BSite:
+                    self.route = BToA()
+                elif self.location == ASite:
+                    self.route = AToB()
         if self.route:
             new_location = self.route.get_next_location(self.location)
             if new_location:
                 return Move(new_location, self)
-        # bomb stuff
+
+
         return Wait

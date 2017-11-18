@@ -15,7 +15,7 @@ class Player(Character):
             print("There are {} enemies left.".format(
                 info.num_enemy()
             ))
-            if info.turns_til_explosion > 0 and info.turns_til_explosion < 99:
+            if 0 <= info.turns_til_explosion < 99:
                 print("There are {} turns left until bomb explodes.".format(info.turns_til_explosion))
             else:
                 print("There are {} turns left this round.".format(

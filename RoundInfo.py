@@ -7,11 +7,15 @@ class RoundInfo:
                  player,
                  turns_til_explosion,
                  players,
-                 turns_left):
+                 turns_left,
+                 bomb_location):
         self._player = player
         self.turns_til_explosion = turns_til_explosion
         self._players = players
         self.turns_left = turns_left
+        self.can_see_bomb = False
+        if bomb_location:
+            self.can_see_bomb = bomb_location.location_name() == player.location.location_name()
 
     def team_mates(self):
         teammates = []

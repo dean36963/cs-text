@@ -1,3 +1,4 @@
+from Locations import ASite, BSite
 from NPC import NPC
 from Player import Player
 from random import randint
@@ -18,6 +19,7 @@ class RoundController:
         self.ct_rounds = 0
         self.t_rounds = 0
         self.player_is_terrorist = player_is_terrorist
+        self.bomb_location = None
 
     def start(self):
         self.players = []
@@ -25,6 +27,7 @@ class RoundController:
         self.time_til_bomb = -1
         self.ct_rounds = 0
         self.t_rounds = 0
+        self.bomb_location = None
         if self.player_is_terrorist:
             self.players.append(Player(Terrorist))
             self.players.append(NPC(CounterTerrorist))
@@ -35,7 +38,7 @@ class RoundController:
         for i in range(1, 5):
             self.players.append(NPC(CounterTerrorist))
             self.players.append(NPC(Terrorist))
-        t_with_bomb = randint(1,5)
+        t_with_bomb = randint(1, 5)
         t_index = 0
         for player in self.players:
             if player.side != Terrorist:
@@ -43,7 +46,6 @@ class RoundController:
             t_index += 1
             if t_index == t_with_bomb:
                 player.give_bomb()
-
 
     def side_winning_round(self, no_print=False):
         ct_players = []
@@ -59,7 +61,7 @@ class RoundController:
             # CT eliminated in time
             return Terrorist
         if len(t_players) == 0 and \
-            self.time_til_bomb -1:
+            self.time_til_bomb == -1:
             if not no_print:
                 print("Counter terrorists eliminated Terrorists.")
             # Bomb was never set and T eliminated
@@ -99,16 +101,24 @@ class RoundController:
                 for player in self.players:
                     if player.is_dead():
                         continue
-                    info = RoundInfo(player, self.time_til_bomb, self.players, self.time_left)
+                    info = RoundInfo(player, self.time_til_bomb, self.players, self.time_left, self.bomb_location)
                     action = player.get_action(info)
                     if isinstance(action, Wait):
                         pass
                     if isinstance(action, Move):
                         player.set_next_move(action.option)
                     if isinstance(action, Plant):
-                        print("The bomb has been planted.")
-                        self.time_til_bomb = 5
-                        self.time_left += 5
+                        if (player.location == ASite or player.location == BSite) \
+                                and player.has_bomb:
+                            print("The bomb has been planted.")
+                            self.time_til_bomb = 7
+                            self.time_left += 7
+                            self.bomb_location = player.location()
+                            player.has_bomb = False
+                    if isinstance(action, Defuse):
+                        if player.location().location_name() == self.bomb_location.location_name():
+                            self.bomb_location = None
+                            self.time_til_bomb = 99
                     if isinstance(action, Shoot):
                         location = action.option
                         for target in self.players:
@@ -137,18 +147,27 @@ class RoundController:
                                     elif isinstance(player, Player):
                                         print("You hit an enemy.")
                 for dead_player in players_died_this_round:
+                    if dead_player.has_bomb:
+                        bomb_dropped_at = dead_player.location().__class__
+                        for player in self.players:
+                            if player.side == dead_player.side \
+                                and player.is_alive() \
+                                    and player.location().__class__ == bomb_dropped_at:
+                                player.give_bomb()
+                                break
                     self.players.remove(dead_player)
                 for player in self.players:
                     player.do_move()
-                self.time_left -= 1
-                if self.time_til_bomb > 0 and self.time_til_bomb < 10:
-                    self.time_til_bomb -= 1
+
                 if self.side_winning_round():
                     print("{} win round!".format(
                         self.side_winning_round(no_print=True).str()
                     ))
                     print("")
                     break
+                self.time_left -= 1
+                if 0 < self.time_til_bomb < 10:
+                    self.time_til_bomb -= 1
             if self.side_winning_round(no_print=True) == Terrorist:
                 self.t_rounds += 1
             else:
