@@ -91,6 +91,7 @@ class Defuse(Action):
     @staticmethod
     def aliases():
         return [
+            "defuse",
             "difuse",
             "diffuse",
             "disarm"
