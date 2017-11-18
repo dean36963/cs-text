@@ -1,5 +1,6 @@
 from Character import Character
 from Actions import action_from_alias
+import sys
 
 
 class Player(Character):
@@ -46,4 +47,4 @@ class Player(Character):
             return action(option,self)
         except KeyboardInterrupt:
             print("RAGE QUIT")
-            exit(0)
+            sys.exit(0)
