@@ -14,6 +14,14 @@ class Character:
         # TODO Weapons
         self.health = 100
         self.has_bomb = False
+        self.next_move = None
+
+    def set_next_move(self, new_location):
+        self.next_move = new_location
+    def do_move(self):
+        if self.next_move:
+            self.location = self.next_move
+            self.next_move = None
 
     def is_alive(self):
         if self.health > 0:

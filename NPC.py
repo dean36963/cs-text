@@ -30,10 +30,11 @@ class NPC(Character):
             return Shoot(list(info.enemies_in_sight().keys())[0], self)
         if not self.route:
             for team in info.team_mates():
-                if team.location != TerroristSpawn:
+                if team.next_move:
                     # this teammate has moved, get route from this
-                    self.route = get_t_route_from_first_move(team.location)
+                    self.route = get_t_route_from_first_move(team.next_move)
                     break
+        if not self.route:
             # no team mate has yet moved, pick a route
             route_num = randint(1,3)
             if route_num == 1:
