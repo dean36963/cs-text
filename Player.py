@@ -48,3 +48,7 @@ class Player(Character):
         except KeyboardInterrupt:
             print("RAGE QUIT")
             sys.exit(0)
+        except EOFError:
+            print("RAGE QUIT")
+            sys.exit(0)
+
