@@ -77,6 +77,7 @@ class RoundController:
             ))
             while self.players:
                 players_died_this_round = []
+                players_to_move_this_round = {}
                 for player in self.players:
                     if player.is_dead():
                         continue
@@ -85,7 +86,7 @@ class RoundController:
                     if isinstance(action, Wait):
                         pass
                     if isinstance(action, Move):
-                        player.set_location(action.option)
+                        players_to_move_this_round[player] = action
                     if isinstance(action, Shoot):
                         location = action.option
                         for target in self.players:
@@ -108,6 +109,10 @@ class RoundController:
                                         print("You hit an enemy.")
                 for dead_player in players_died_this_round:
                     self.players.remove(dead_player)
+                for player in self.players:
+                    if player in players_to_move_this_round:
+                        action = players_to_move_this_round[player]
+                        player.set_location(action.option)
                 self.time_left -= 1
                 if self.side_winning_round():
                     print("{} win round!".format(
