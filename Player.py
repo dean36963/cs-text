@@ -49,7 +49,7 @@ class Player(Character):
                         option_string = input("> ")
                         try:
                             option = action.options(self)[int(option_string)]
-                        except IndexError:
+                        except (IndexError, ValueError):
                             continue
             return action(option,self)
         except KeyboardInterrupt:
